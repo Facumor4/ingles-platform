@@ -1,11 +1,14 @@
 "use client"
 import { useEffect, useState } from "react"
-import { supabase } from "@/lib/supabase"
+import { getSupabase } from "@/lib/supabase"
+
 
 export default function AdminAccesos() {
   const [users, setUsers] = useState([])
   const [clases, setClases] = useState([])
   const [accesos, setAccesos] = useState([])
+
+  const supabase = getSupabase()
 
   useEffect(() => {
     loadData()
