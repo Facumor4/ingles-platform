@@ -1,15 +1,11 @@
 "use client"
 
-import { createClient } from "@supabase/supabase-js"
+import { getSupabase } from "@/lib/supabase"
 
 export default function Pagar() {
 
   const pagar = async () => {
-
-    const supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-    )
+    const supabase = getSupabase()
 
     const { data: { session } } = await supabase.auth.getSession()
 

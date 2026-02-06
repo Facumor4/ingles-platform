@@ -1,21 +1,22 @@
 "use client"
 import { useEffect, useState } from "react"
-import { supabase } from "@/lib/supabase"
+import { getSupabase } from "@/lib/supabase"
+
 
 export default function Admin() {
   const [users, setUsers] = useState([])
 
-  const fetchUsers = async () => {
-    const { data } = await supabase
-      .from("perfiles")
-      .select("*")
-
-    setUsers(data || [])
-  }
-
   useEffect(() => {
-    fetchUsers()
+    const supabase = getSupabase()
+
+    const cargar = async () => {
+      const { data } = await supabase.from("perfiles").select("*")
+      setUsers(data)
+    }
+
+    cargar()
   }, [])
+
 
   const toggleAccess = async (id, current) => {
     await supabase
