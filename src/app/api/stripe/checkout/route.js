@@ -3,7 +3,6 @@ export const runtime = "nodejs"
 import Stripe from "stripe"
 
 export async function POST(req) {
-
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
   const session = await stripe.checkout.sessions.create({
@@ -15,8 +14,8 @@ export async function POST(req) {
         quantity: 1,
       },
     ],
-    success_url: "ingles-platform-rho.vercel.app",
-    cancel_url: "ingles-platform-rho.vercel.app",
+    success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/dashboard`,
+    cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/dashboard`,
   })
 
   return Response.json({ url: session.url })
