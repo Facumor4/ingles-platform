@@ -1,7 +1,8 @@
 "use client"
 import { useEffect, useState } from "react"
 import { useParams } from "next/navigation"
-import { supabase } from "@/lib/supabase"
+import { getSupabase } from "@/lib/supabase"
+const supabase = getSupabase()
 
 export default function ClasePage() {
   const { carpeta } = useParams()
