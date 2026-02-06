@@ -14,8 +14,8 @@ export async function POST() {
         quantity: 1,
       },
     ],
-    success_url: "https://tu-dominio.vercel.app",
-    cancel_url: "https://tu-dominio.vercel.app",
+    success_url: "https://ingles-platform-three.vercel.app/",
+    cancel_url: "https://ingles-platform-three.vercel.app/",
     metadata: {
       user_id: user.id,
     },
