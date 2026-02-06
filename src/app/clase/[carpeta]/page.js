@@ -7,6 +7,8 @@ const supabase = getSupabase()
 export default function ClasePage() {
   const { carpeta } = useParams()
   const [files, setFiles] = useState([])
+  const supabase = getSupabase()
+
 
   const checkAccess = async () => {
     const { data: { user } } = await supabase.auth.getUser()

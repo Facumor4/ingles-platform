@@ -2,11 +2,12 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { getSupabase } from "@/lib/supabase"
-const supabase = getSupabase()
+
 
 
 export default function Dashboard() {
   const [clases, setClases] = useState([])
+  const supabase = getSupabase()
 
   useEffect(() => {
     const loadClases = async () => {
