@@ -27,30 +27,27 @@ export async function POST(req) {
 
   if (event.type === "checkout.session.completed") {
     const session = event.data.object
-    const email = session.customer_email
 
-    // 1️⃣ Buscar el user real en auth.users por email
-    const { data: authUser } = await supabase.auth.admin.listUsers()
+    // 🔥 ESTE es el dato importante
+    const userId = session.metadata.user_id
 
-    const usuario = authUser.users.find(u => u.email === email)
-
-    if (usuario) {    
-      const userId = usuario.id
-
-      // 2️⃣ Dar acceso a todas las clases
-      const { data: clases } = await supabase.from("clases").select("id")
-
-      for (const clase of clases) {
-        await supabase.from("accesos_clases").insert({
-          user_id: userId,
-          clase_id: clase.id,
-          habilitado: true,
-        })
-      }
+    if (!userId) {
+      console.log("No vino user_id en metadata")
+      return new Response("ok", { status: 200 })
     }
 
+    // Dar acceso a todas las clases
+    const { data: clases } = await supabase.from("clases").select("id")
 
-    console.log("Accesos otorgados a:", email)
+    for (const clase of clases) {
+      await supabase.from("accesos_clases").insert({
+        user_id: userId,
+        clase_id: clase.id,
+        habilitado: true,
+      })
+    }
+
+    console.log("Accesos otorgados a user:", userId)
   }
 
   return new Response("ok", { status: 200 })

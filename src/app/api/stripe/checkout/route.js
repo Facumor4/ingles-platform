@@ -16,6 +16,10 @@ export async function POST() {
     ],
     success_url: "https://tu-dominio.vercel.app",
     cancel_url: "https://tu-dominio.vercel.app",
+    metadata: {
+      user_id: user.id,
+    },
+
   })
 
   return Response.json({ url: session.url })
