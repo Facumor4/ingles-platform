@@ -1,14 +1,13 @@
 export const runtime = "nodejs"
 import Stripe from "stripe"
 
+// Esta línea DEBE quedarse fuera o dentro de la función, pero es necesaria
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
+
 export async function POST(req) {
   try {
-    // Verificación de seguridad rápida
-    if (!process.env.STRIPE_SECRET_KEY) {
-      return Response.json({ error: "Falta la Secret Key en el servidor" }, { status: 500 })
-    }
-
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
+    // Definimos la URL base para que no te mande a localhost
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || `https://${process.env.VERCEL_URL}` || "http://localhost:3000";
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
@@ -19,16 +18,15 @@ export async function POST(req) {
           quantity: 1,
         },
       ],
-      // Asegúrate de que esta variable exista en Vercel, o usa un string temporal para probar
-      success_url: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/dashboard`,
-      cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/dashboard`,
+      // Ahora usamos baseUrl para que siempre vuelva a la web correcta
+      success_url: `${baseUrl}/dashboard`,
+      cancel_url: `${baseUrl}/dashboard`,
     })
 
     return Response.json({ url: session.url })
 
   } catch (error) {
-    console.error("Stripe Error:", error.message)
-    // Esto evita que el frontend reciba un "cuerpo vacío" y falle el JSON
+    console.error("Error en Stripe:", error)
     return Response.json({ error: error.message }, { status: 500 })
   }
 }
