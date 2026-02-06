@@ -25,20 +25,8 @@ export default function Pagar() {
 
   return (
     <div style={{ padding: 40 }}>
-      <button
-        onClick={handlePago}
-        style={{
-          padding: "20px 40px",
-          fontSize: "20px",
-          backgroundColor: "black",
-          color: "white",
-          border: "none",
-          cursor: "pointer",
-          borderRadius: "8px"
-        }}
-      >
-        PAGAR ACCESO A LAS CLASES
-      </button>
+      <h1>Pagar acceso</h1>
+      <button onClick={pagar}>Pagar</button>
     </div>
   )
 }
