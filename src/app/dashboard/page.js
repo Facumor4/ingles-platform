@@ -21,6 +21,22 @@ export default function Dashboard() {
 
   return (
     <div className="p-10">
+      <a href="/pagar">
+        <button
+          style={{
+            padding: "12px 24px",
+            backgroundColor: "black",
+            color: "white",
+            border: "none",
+            cursor: "pointer",
+            borderRadius: "8px",
+            marginBottom: "20px"
+         }}
+        >
+          Ir a pagar acceso
+       </button>
+      </a>
+
       <h1 className="text-3xl font-bold mb-10">Tus Clases</h1>
 
       <div className="grid gap-6">
